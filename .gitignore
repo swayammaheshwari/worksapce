@@ -129,11 +129,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-#custom gitignore
-package-lock.json
-
-# dependencies
-
 # next.js
 /.next/
 /out/
