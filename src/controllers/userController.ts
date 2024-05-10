@@ -1,5 +1,6 @@
 import { UserModel } from "../models/userModel";
 import { Request, Response } from "express";
+import { createUserSchema } from "../services/validations/userValidation";
 
 const UserController = {
   // GET /users/:id
@@ -22,6 +23,10 @@ const UserController = {
   createUser: async (req: Request, res: Response) => {
     try {
       const userData = req.body;
+
+      const { error } = createUserSchema.validate(userData);
+      if (error) return res.status(400).json(error.details[0]);
+
       const userExist = await UserModel.findOne({ email: req.body.email });
       if (userExist) {
         return res

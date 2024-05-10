@@ -1,4 +1,5 @@
 // src/index.ts
+// @ts-ignore
 import dotenv from "dotenv";
 import express, { Express } from "express";
 import ejs from "ejs";
@@ -27,7 +28,6 @@ app.use(express.urlencoded({ extended: true }));
 
 if (process.env.NODE_ENV == "development") app.use(debugMiddleware);
 else app.use(routeLogger);
-  
 
 app.use(startRoutes);
 app.use(UsersRoutes);
@@ -41,7 +41,7 @@ app.use(testRoute);
 const start = async () => {
   try {
     // await connectToRedis();
-    // await connectToMongoDB();
+    await connectToMongoDB();
     // await connectToPostgreSQL();
 
     app.listen(process.env.PORT, () => {
