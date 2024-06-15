@@ -1,15 +1,22 @@
-import client from "../config/redisConnect";
+import { createClient } from "redis";
+import dotenv from "dotenv";
 
-const connectToRedis = async (): Promise<void> => {
+dotenv.config();
+
+const client = createClient();
+
+// Handle connection errors
+client.on("error", (err) => {
+  console.error("Error connecting to Redis:", err);
+});
+
+const connectToRedis = async () => {
   try {
     client.on("connect", () => console.log("Connected to Redis"));
-
     await client.connect();
-
-    client.on("error", (err: any) => console.log("Redis Client Error", err));
   } catch (error) {
     console.error("Error connecting to Redis", error);
   }
 };
 
-export default connectToRedis;
+export { connectToRedis, client };

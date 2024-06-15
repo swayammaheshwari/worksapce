@@ -1,12 +1,11 @@
 // src/index.ts
-// @ts-ignore
 import dotenv from "dotenv";
 import express, { Express } from "express";
 import ejs from "ejs";
 import cors from "cors";
 import connectToMongoDB from "./db/mongoConnect";
-import connectToRedis from "./db/redisConnect";
-import connectToPostgreSQL from "./db/postgressConnect";
+import { connectToRedis } from "./db/redisConnect";
+import { connectToPostgres } from "./db/postgressConnect";
 import debugMiddleware from "./middleware/debug";
 import { corsOptions } from "./services/cors";
 //routes
@@ -40,9 +39,9 @@ app.use(testRoute);
 
 const start = async () => {
   try {
-    // await connectToRedis();
+    await connectToRedis();
     await connectToMongoDB();
-    // await connectToPostgreSQL();
+    await connectToPostgres();
 
     app.listen(process.env.PORT, () => {
       console.log(
